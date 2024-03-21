@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <div class="split-screen">
+        <div class="left">
+            <section class="copy">
+                <h1>Assignment Management System</h1>
+                <p>Your interactivity for any course.</p>
+            </section>
+        </div>
+        <div class="right">
+            <form action="signup.php" method="POST">
+                <section class="copy">
+                    <h2>Sign Up</h2>
+                    <div class="login-container">
+                        <p>Already have an account? <a href="login.php"><strong>Log In</strong></a></p>
+                    </div>
+                </section>
+                <div class="input-container name">
+                    <label for="fname">Full name</label>
+                    <input id="fname" name="fname" type="text">
+                </div>
+                <div class="input-container email">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+                <div id="rolets">
+                    <label for="student">Student</label>
+                    <input type="radio" id="student" name="role" value="student">
+                    <label for="teacher">Teacher</label>
+                    <input type="radio" id="teacher" name="role" value="teacher">
+                </div>
+                <div class="input-container password">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Must be at least 6 characters" required>
+                    <span class="material-symbols-outlined">
+                        visibility_off
+                        </span>
+                </div>
+                <div class="input-container cta">
+                    <label class="checkbox-container">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                        Sign up for email updates.
+                    </label>
+
+                </div>
+                <button class="signup-btn" type="submit">Sign Up</button>
+                <section class="copy legal">
+                    <p><span class="small">By continuing, you agree to accept our <a href="#">Privacy policy</a> &amp; <a href="#">Terms of Service</a>.
+                    </span></p>
+                </section>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
