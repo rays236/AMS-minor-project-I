@@ -1,4 +1,5 @@
 <?php
+session_start(); //is this the messing piece
 if(isset($_SESSION['id'])){ //This is not working why??
     echo<<<_END
     <script>

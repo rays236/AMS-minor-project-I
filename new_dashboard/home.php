@@ -74,24 +74,27 @@ echo<<<_END
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="modal.css">
+
+<script src="script.js"></script>
+
 </head>
 <body>
     <div class="sidebar"> 
         <div class="logo-details">
             <i class='bx bxl-c-plus-plus'></i>
-            <span class="logo_name">CodingLab</span>
+            <span class="logo_name">AMS</span>
         </div>
         <ul class="nav-links">
-            <li>
-                <a href="home.php">
+            <li class="menu__item" value="home">
+                <a>
                     <i class='bx bxs-dashboard' ></i>
                     <span class="link_name">Dashboard</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Dashboard</a></li>
+                    <li>Dashboard</li>
                 </ul>
             </li>
-            <li>
+            <li class="menu__item" value="enrolled">
                 <div class="icon-link">
                     <a href="#">
                         <i class='bx bx-layer-plus'></i>
@@ -104,9 +107,9 @@ echo<<<_END
                     $classenrolled
                 </ul>
             </li>
-            <li>
+            <li class="menu__item" value="archive">
                 <div class="icon-link">
-                    <a href="#">
+                    <a>
                         <i class='bx bx-archive'></i>
                         <span class="link_name">Archived</span>
                     </a>
@@ -129,7 +132,7 @@ echo<<<_END
                 </ul>
             </li> 
             $mycard
-            <li>
+            <li class="menu__item" value="settings">
                 <a href="#">
                     <i class='bx bx-cog' ></i>
                     <span class="link_name">Settings</span>
@@ -158,7 +161,11 @@ echo<<<_END
         <i class='bx bx-menu'></i>
         <span class="text">Drop Down Sidebar</span>
     </div>
+    <div id="container"></div>
 </section>
+
+
+
 <script>
     let arrow = document.querySelectorAll(".arrow");
    
