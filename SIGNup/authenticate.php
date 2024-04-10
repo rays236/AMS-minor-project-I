@@ -23,10 +23,12 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     $row = $result->fetch();
     $fn  = $row['fname'];
     $pw  = $row['password'];
+    $email = $row['email'];
     $id = $row['id'];
     if (password_verify(str_replace("'", "", $pw_temp), $pw)){
         session_start();
         $_SESSION['id'] = $id;
+        $_SESSION['email'] = $email;
 
         echo<<<_END
         <script>
