@@ -161,7 +161,7 @@ echo<<<_END
         <i class='bx bx-menu'></i>
         <span class="text">Drop Down Sidebar</span>
     </div>
-    <div id="container"></div>
+    <div id="container" ></div>
 </section>
 
 

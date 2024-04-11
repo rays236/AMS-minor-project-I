@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^([a-zA-Z0-9]+)$ index.html?path=$1
+RewriteRule ^([a-zA-Z0-9]+)$ home.php?path=$1

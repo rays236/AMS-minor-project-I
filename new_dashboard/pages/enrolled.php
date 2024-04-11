@@ -43,6 +43,7 @@ if(isset($_SESSION['id'])){
 <span class='text-title'>$classcode</span>
 <div class='card-button'>
 <i class='bx bxs-arrow-to-right'></i>
+
 </div>
 </div></div>";
     }
@@ -64,7 +65,7 @@ if(isset($_SESSION['id'])){
       while($rowss =$ssr ->fetch()){
         if($id == $rowss['student_id']){
 
-          $card .=   "<div class='card'>
+          $card .=   "<div class='card flex-item'>
 <div class='card-img'></div>
 <div class='card-info'>
   <p class='text-title'>$classname </p>
@@ -73,7 +74,9 @@ if(isset($_SESSION['id'])){
 <div class='card-footer'>
 <span class='text-title'>$classcode</span>
 <div class='card-button'>
+<a href='/minorproject/new_dashboard/pages/class.php?i=$classcode'>
 <i class='bx bxs-arrow-to-right'></i>
+</a>
 </div>
 </div></div>";
         }
@@ -94,6 +97,15 @@ echo<<<_END
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
+.flex-container{
+  display:flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+    .flex-item {
+      margin:10px;
+    }
+
         .card {
  width: 190px;
  height: 254px;
@@ -166,7 +178,9 @@ svg {
     </style>
 </head>
 <body>
+<div class = "flex-container">
     $card
+  </div>
 </body>
 </html>
 _END;
