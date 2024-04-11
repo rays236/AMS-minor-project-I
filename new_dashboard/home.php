@@ -44,7 +44,7 @@ if(isset($_SESSION['id'])){
     else{
         $dynamic = "join_class.html";
         $dynamicnav = "Join Class";
-        $mycard = '<dialog data-modal class="mycard"><form action="joinclass.php" method="post"><div class="title">Class Code</div><p class="message">Enter the code provided by your lecturer.</p><div class="inputs"><input id="input1" name="classcode" type="text" maxlength="5"></div><button type="submit" class="action">Join Class</button><button type="submit" class="action" formmethod="dialog">Cancel</button></form></dialog>';
+        $mycard = '<dialog data-modal class="mycard"><form action="/minorproject/new_dashboard/joinclass.php" method="post"><div class="title">Class Code</div><p class="message">Enter the code provided by your lecturer.</p><div class="inputs"><input id="input1" name="classcode" type="text" maxlength="5"></div><button type="submit" class="action">Join Class</button><button type="submit" class="action" formmethod="dialog">Cancel</button></form></dialog>';
 
         $qs = "SELECT * FROM classes";
         $rs = $pdo->query($qs);
