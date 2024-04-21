@@ -12,6 +12,8 @@ catch(PDOException $e){
 session_start();
 $id = $_SESSION['id'];
 
+
+
 if(isset($_GET['i'])){
     $classcode = $_GET['i'];
 }
@@ -33,13 +35,33 @@ while($rows = $rs -> fetch()){
 
 }
 
-$qa = "SELECT * FROM $assign_tbl";
+$qa = "SELECT * FROM $assign_tbl ORDER BY  assign_id DESC";
 $ra = $pdo -> query($qa);
 while($rowa = $ra ->fetch()){
     $assign = $rowa['content'];
-    $assignmentlist .= "<div class = 'assign'>$assign</div>";
+    $assigned_on = $rowa['assigned_on'];
+    $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign</div>"; 
 }
 
+$re = "SELECT * FROM users WHERE id = '$id'";
+$rr = $pdo -> query($re);
+$ror = $rr -> fetch();
+if ($ror['role'] == 'teacher'){
+    $assignmenthandler = "    <form method='post' enctype='multipart/form-data'>
+    <script src='https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js'></script>
+
+        <textarea name='editor1' id='editor1'></textarea>
+                <script>
+                        CKEDITOR.replace( 'editor1' );
+                </script>
+        <br>
+        <input type = 'file' name = 'file' id='file'><br><br> 
+        <input type='submit'>
+</form>";
+}
+else {
+    $assignmenthandler = ' ';
+}
 
 // CREATE ASSIGNMENT FOR TEACHER AND VIEW ONLY FOR STUDENT if case
 
@@ -59,6 +81,9 @@ aside {
   font-style: italic;
   background-color: lightgray;
 }
+.assigned_on{
+    font-size: 0.75em;
+}
 .assign{
     margin: 10px 10px;
     background-color: lightgray;
@@ -69,16 +94,32 @@ aside {
 .flex-container{
     width: 75%;
 }
+i{
+    color:white;
+    margin-left: 5px;
+
+}
 .navbar{
-    height: 40px;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    background-color: #1d1b31;
+    color: white;
+    
 }
 .classname{
     margin-left: 20px;
     font-size: large;
     font-weight: bold;
+
 }
 .students{
     padding: 5px;
+}
+.assignmenthandler{
+    margin-top: 70px;
 }
 </style>
 
@@ -87,20 +128,12 @@ aside {
 <body>
     
     <div class="navbar">
-       <a href="/minorproject/new_dashboard/home.php"><i class='bx bx-left-arrow bx-md'></i></a>
+       <a href="/minorproject/new_dashboard/home.php"><i class='bx bx-arrow-back bx-md' ></i></a>
        <span class="classname">$classname</span>
     </div>
     <hr>
     <div class="assignmenthandler">
-    <form method="post" enctype="multipart/form-data">
-    <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
-
-        <textarea name="editor1" id="editor1"></textarea>
-                <script>
-                        CKEDITOR.replace( 'editor1' );
-                </script>
-        <input type='submit'>
-</form>
+    $assignmenthandler
     </div>
     <aside>
         <h3>Students</h3>
@@ -116,14 +149,37 @@ aside {
 </html>
 _END;
 
-if(isset($_POST['editor1'])){
+if(isset($_POST['editor1'])  || isset($_FILES["file"]["name"])){
+
+    if($_FILES["file"]["name"]!= null){
+        $targetDir = "uploads/";
+        $targetFile = $targetDir . basename($_FILES["file"]["name"]);
+    }
+    else {
+        $targetDir = null;
+        $targetFile = ' ';
+    }
+    
+
     $content = $_POST['editor1'];
     $added_on = date('Y-m-d h:i:s');
 
-    $query = "INSERT INTO $assign_tbl(content, assigned_on) VALUES ('$content','$added_on')";
-    $rs = $pdo -> query($query);
-    if($result){
-        header("Refresh:0");
+    if ($content!=null || move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)){
+        if($_FILES["file"]["name"] != null){
+            $filename = $_FILES["file"]["name"];
+            $folder_path = $targetDir;
+        }
+        else{
+            $filename = null;
+            $folder_path = null;
+        }
+        //file name shouldn't contain quote(') sign in it
+
+        $query = "INSERT INTO $assign_tbl(content, assigned_on, filenam, folder_path) VALUES ('$content','$added_on', '$filename','$folder_path')";
+        $rs = $pdo -> query($query);
+        if ($rs){
+            echo "<script>window.location.reload()</script>";
+        }
     }
 }
 ?>
