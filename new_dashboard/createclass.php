@@ -33,7 +33,7 @@ $result = $pdo -> query($insclass);
 
 if ($result){
     $createstudenttbl = "CREATE TABLE $std_tbl_id (student_id varchar(10) NOT NULL, student_name varchar(64) NOT NULL)";
-    $createassigntbl = "CREATE TABLE $assignment_id(assign_id varchar(10) NOT NULL, assign_topic varchar(128) NOT NULL)";
+    $createassigntbl = "CREATE TABLE $assignment_id(assign_id int PRIMARY KEY, content text, assigned_on datetime)";
 
     $creation1 = $pdo -> query($createassigntbl);
     $creation2 = $pdo -> query($createstudenttbl);

@@ -8,9 +8,6 @@ catch(PDOException $e){
     throw new PDOException($e -> getMessage(), (int)$e->getCode());
 }
 
-ini_set("display_errors","1");
-ini_set("display_startup_errors","1");
-error_reporting(E_ALL);
 
 session_start();
 $id = $_SESSION['id'];
@@ -39,9 +36,10 @@ while($rows = $rs -> fetch()){
 $qa = "SELECT * FROM $assign_tbl";
 $ra = $pdo -> query($qa);
 while($rowa = $ra ->fetch()){
-    $assign = $rowa['assign_topic'];
+    $assign = $rowa['content'];
     $assignmentlist .= "<div class = 'assign'>$assign</div>";
 }
+
 
 // CREATE ASSIGNMENT FOR TEACHER AND VIEW ONLY FOR STUDENT if case
 
@@ -62,7 +60,7 @@ aside {
   background-color: lightgray;
 }
 .assign{
-    margin-right: 30px;
+    margin: 10px 10px;
     background-color: lightgray;
     padding: 20px;
     border-radius: 10px;
@@ -84,7 +82,7 @@ aside {
 }
 </style>
 
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>   
 </head>
 <body>
     
@@ -93,6 +91,17 @@ aside {
        <span class="classname">$classname</span>
     </div>
     <hr>
+    <div class="assignmenthandler">
+    <form method="post" enctype="multipart/form-data">
+    <script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+        <textarea name="editor1" id="editor1"></textarea>
+                <script>
+                        CKEDITOR.replace( 'editor1' );
+                </script>
+        <input type='submit'>
+</form>
+    </div>
     <aside>
         <h3>Students</h3>
         <hr>
@@ -106,3 +115,15 @@ aside {
 </body>
 </html>
 _END;
+
+if(isset($_POST['editor1'])){
+    $content = $_POST['editor1'];
+    $added_on = date('Y-m-d h:i:s');
+
+    $query = "INSERT INTO $assign_tbl(content, assigned_on) VALUES ('$content','$added_on')";
+    $rs = $pdo -> query($query);
+    if($result){
+        header("Refresh:0");
+    }
+}
+?>

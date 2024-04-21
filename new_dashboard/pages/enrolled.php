@@ -7,9 +7,6 @@ catch(PDOException $e){
     throw new PDOException($e -> getMessage(), (int)$e->getCode());
 }
 
-ini_set("display_errors","1");
-ini_set("display_startup_errors","1");
-error_reporting(E_ALL);
 
 session_start();
 
@@ -42,8 +39,9 @@ if(isset($_SESSION['id'])){
 <div class='card-footer'>
 <span class='text-title'>$classcode</span>
 <div class='card-button'>
+<a href='/minorproject/new_dashboard/pages/class.php?i=$classcode'>
 <i class='bx bxs-arrow-to-right'></i>
-
+</a>
 </div>
 </div></div>";
     }

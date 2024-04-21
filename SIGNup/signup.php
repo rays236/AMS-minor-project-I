@@ -8,12 +8,6 @@ catch (PDOException $e){
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-ini_set("display_errors", "1");
-ini_set("display_startup_errors", "1");
-error_reporting(E_ALL);
-
-
-
 if (isset($_POST['fname']))
     $fn = fix_string($_POST['fname']);
 if (isset($_POST['password']))
