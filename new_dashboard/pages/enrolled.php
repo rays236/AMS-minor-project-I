@@ -30,7 +30,7 @@ if(isset($_SESSION['id'])){
       $section = $rows['section'];
       $subject = $rows['subject'];
 
-      $card .=   "<div class='card'>
+      $card .=   "<div class='card flex-item'>
 <div class='card-img'></div>
 <div class='card-info'>
   <p class='text-title'>$classname </p>

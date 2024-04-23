@@ -49,9 +49,13 @@ if ($ror['role'] == 'teacher'){
         <input type = 'file' name = 'file' id='file'><br><br> 
         <input type='submit'>
 </form>";
+$archive = "<div class='dropdown '>
+<button class='dropbtn' id = 'archive'><i class='bx bx-archive-in'></i></button>
+</div>";
 }
 else {
     $assignmenthandler = ' ';
+    $archive = '';
 }
 
 $qa = "SELECT * FROM $assign_tbl ORDER BY  assign_id DESC";
@@ -141,6 +145,9 @@ echo<<<_END
         display: inline-block;
         float: right;
     
+      }
+      .dropdown .archive{
+        margin-right: 20px;
       }
       
       /* Dropdown Content (Hidden by Default) */
@@ -232,6 +239,7 @@ i{
     <div class="navbar">
        <a href="/minorproject/new_dashboard/home.php"><i class='bx bx-arrow-back bx-md' ></i></a>
        <span class="classname">$classname $test</span>
+       $archive
     </div>
     <hr>
     <div class="assignmenthandler">
