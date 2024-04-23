@@ -72,6 +72,7 @@ echo<<<_END
     <title>Drop Down Sidebar Menu</title>
     <!-- Boxicons CSS -->
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css' rel = 'stylesheet'>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="modal.css">
 
@@ -81,7 +82,7 @@ echo<<<_END
 <body>
     <div class="sidebar"> 
         <div class="logo-details">
-            <i class='bx bxl-c-plus-plus'></i>
+        <i class="fa-solid fa-list-check"></i>
             <span class="logo_name">AMS</span>
         </div>
         <ul class="nav-links">
@@ -132,13 +133,13 @@ echo<<<_END
                 </ul>
             </li> 
             $mycard
-            <li class="menu__item" value="settings">
+            <li class="menu__item" value="calender">
                 <a href="#">
-                    <i class='bx bx-cog' ></i>
-                    <span class="link_name">Settings</span>
+                    <i class='bx bx-calendar-event'></i>
+                    <span class="link_name">Calender</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Settings</a></li>
+                    <li><a class="link_name" href="#">Calender</a></li>
                 </ul>
             </li>
             <li>
@@ -159,7 +160,6 @@ echo<<<_END
 <section class="home-section">
     <div class="home-content">
         <i class='bx bx-menu'></i>
-        <span class="text">Drop Down Sidebar</span>
     </div>
     <div id="container" ></div>
 </section>

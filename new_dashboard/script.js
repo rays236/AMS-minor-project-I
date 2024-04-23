@@ -19,9 +19,9 @@ window.onload = function()
             loadPage("archive");
             break;
         }
-        case "settings":
+        case "calender":
         {
-            loadPage("settings");
+            loadPage("calender");
             break;
         }
         default:
