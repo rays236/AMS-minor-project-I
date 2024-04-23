@@ -34,27 +34,6 @@ while($rows = $rs -> fetch()){
     $studentslist .="<div class='students'> $std</div>";
 
 }
-
-$qa = "SELECT * FROM $assign_tbl ORDER BY  assign_id DESC";
-$ra = $pdo -> query($qa);
-while($rowa = $ra ->fetch()){
-    $assign = $rowa['content'];
-    $assigned_on = $rowa['assigned_on'];
-    $filename = $rowa['filenam'];
-    $extension = pathinfo($filename, PATHINFO_EXTENSION);
-    $pictures = array('jpg', 'jpeg', 'png','gif');
-    if(in_array($extension, $pictures)){
-        $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
-    }
-    elseif ($extension) {
-        $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
-    }
-    else {
-        $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign</div>";
-    }
-     
-}
-
 $re = "SELECT * FROM users WHERE id = '$id'";
 $rr = $pdo -> query($re);
 $ror = $rr -> fetch();
@@ -75,6 +54,65 @@ else {
     $assignmenthandler = ' ';
 }
 
+$qa = "SELECT * FROM $assign_tbl ORDER BY  assign_id DESC";
+$ra = $pdo -> query($qa);
+while($rowa = $ra ->fetch()){
+    $assign = $rowa['content'];
+    $assigned_on = $rowa['assigned_on'];
+    $filename = $rowa['filenam'];
+    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+    $pictures = array('jpg', 'jpeg', 'png','gif');
+    if ($ror['role'] == 'teacher'){
+        if(in_array($extension, $pictures)){
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#'>Option 1</a>
+              <a href='#'>Option 2</a>
+              <a href='#' id='deleteOption'>Delete</a> <!-- Added id='deleteOption' -->
+            </div>
+            </div><div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
+        }
+        elseif ($extension) {
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#'>Option 1</a>
+              <a href='#'>Option 2</a>
+              <a href='#' id='deleteOption'>Delete</a> <!-- Added id='deleteOption' -->
+            </div>
+            </div><div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
+        }
+        else {
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#'>Option 1</a>
+              <a href='#'>Option 2</a>
+              <a href='#' id='deleteOption'>Delete</a> <!-- Added id='deleteOption' -->
+            </div>
+            </div><div class = 'assigned_on'>$assigned_on</div><br>$assign</div>";
+        }
+    }
+    else {
+        if(in_array($extension, $pictures)){
+            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
+        }
+        elseif ($extension) {
+            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
+        }
+        else {
+            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign</div>";
+        }
+    }
+     
+}
+
+
+
 // CREATE ASSIGNMENT FOR TEACHER AND VIEW ONLY FOR STUDENT if case
 $test = '';
 echo<<<_END
@@ -86,6 +124,56 @@ echo<<<_END
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
+    /* Style the dropdown button */
+    .dropbtn {
+        color: black;
+        padding: 16px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+      }
+      
+      
+      /* The container <div> - needed to position the dropdown content */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        float: right;
+    
+      }
+      
+      /* Dropdown Content (Hidden by Default) */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      /* Links inside the dropdown */
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    
+      }
+      
+      /* Change color of dropdown links on hover */
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+      
+      /* Show the dropdown menu on hover */
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      
+    
+      
 aside {
   width: 20%;
   padding-left: 15px;
