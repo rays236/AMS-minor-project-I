@@ -232,6 +232,8 @@ i{
     <div class="assignmenthandler">
     $assignmenthandler
     </div>
+    <hr>
+    <br>
     <aside>
         <h3>Students</h3>
         <hr>
@@ -246,7 +248,7 @@ i{
 </html>
 _END;
 $test = isset($_POST['file']);
-if(isset($_POST['editor1'])  || !empty($_FILES["file"]["name"])){
+if(!empty($_POST['editor1'])  || !empty($_FILES["file"]["name"])){
     $content = $_POST['editor1'];
     $added_on = date('Y-m-d h:i:s');
 
