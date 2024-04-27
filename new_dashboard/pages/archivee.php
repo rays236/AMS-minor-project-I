@@ -8,16 +8,14 @@ catch(PDOException $e){
     throw new PDOException($e -> getMessage(), (int)$e->getCode());
 }
 
-$assign_id = $_GET['assign_id'];
-$assign_tbl = $_GET['assign_tbl'];
 $class_tbl = $_GET['class_tbl'];
 
-$result = $pdo -> query("DELETE FROM $assign_tbl WHERE assign_id = '$assign_id'");
+$result = $pdo -> query("INSERT INTO archived_classes SELECT * FROM classes WHERE classcode = '$class_tbl'");
+$del = $pdo -> query("DELETE FROM classes WHERE classcode = '$class_tbl'");
 if($result){
     echo"
     <script>
-    location.href='/minorproject/new_dashboard/pages/class.php?i=$class_tbl'
+    location.href='/minorproject/new_dashboard/home.php'
     </script>
     ";
 }
-

@@ -50,7 +50,7 @@ if ($ror['role'] == 'teacher'){
         <input type='submit'>
 </form>";
 $archive = "<div class='dropdown '>
-<button class='dropbtn' id = 'archive'><i class='bx bx-archive-in'></i></button>
+<a href='/minorproject/new_dashboard/pages/archivee.php?class_tbl=$classcode' class='dropbtn confirmation' id = 'archive'><i class='bx bx-archive-in'></i></a>
 </div>";
 }
 else {
@@ -67,6 +67,8 @@ while($rowa = $ra ->fetch()){
     $assign_id = $rowa['assign_id'];
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
     $pictures = array('jpg', 'jpeg', 'png','gif');
+
+    $tbl = $assign_tbl.$assign_id;
     if ($ror['role'] == 'teacher'){
         if(in_array($extension, $pictures)){
             $assignmentlist .= "
@@ -106,13 +108,34 @@ while($rowa = $ra ->fetch()){
     }
     else {
         if(in_array($extension, $pictures)){
-            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
+            </div>
+          </div> 
+            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
         }
         elseif ($extension) {
-            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
+            </div>
+          </div> 
+            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
         }
         else {
-            $assignmentlist .= "<div class = 'assign'><div class = 'assigned_on'>$assigned_on</div>$assign</div>";
+            $assignmentlist .= "<div class = 'assign'>
+            <div class='dropdown'>
+            <button class='dropbtn'>&#8942;</button>
+            <div class='dropdown-content'>
+              <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
+            </div>
+          </div> 
+          <div class = 'assigned_on'>$assigned_on</div>$assign</div>";
         }
     }
      
@@ -216,7 +239,39 @@ i{
 .assignmenthandler{
     margin-top: 70px;
 }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
 
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>   
@@ -230,9 +285,25 @@ i{
     </div>
     <hr>
     <div class="assignmenthandler">
-    $assignmenthandler
+    $assignmenthandler 
     </div>
     <hr>
+
+    <div id = 'myModal' class = 'modal'>
+        <div class = 'modal-content'>
+            <span class = 'close'>&times;</span>
+
+            <form action = "assignsubmit.php" method = 'post' enctype = 'multipart/form-data'>
+                <input type = 'hidden' name = 'tbl_name' id='tbl_name'>
+                <input type = 'hidden' name = 'classcode' value = '$classcode'>
+                <input type = 'file' name = 'file'>
+                <input type = 'submit'>
+            </form>
+
+        </div>
+    </div>
+
+
     <br>
     <aside>
         <h3>Students</h3>
@@ -247,7 +318,6 @@ i{
 </body>
 </html>
 _END;
-$test = isset($_POST['file']);
 if(!empty($_POST['editor1'])  || !empty($_FILES["file"]["name"])){
     $content = $_POST['editor1'];
     $added_on = date('Y-m-d h:i:s');
