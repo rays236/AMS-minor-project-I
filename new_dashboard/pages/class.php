@@ -69,6 +69,7 @@ while($rowa = $ra ->fetch()){
     $pictures = array('jpg', 'jpeg', 'png','gif');
 
     $tbl = $assign_tbl.$assign_id;
+
     if ($ror['role'] == 'teacher'){
         if(in_array($extension, $pictures)){
             $assignmentlist .= "
@@ -76,7 +77,7 @@ while($rowa = $ra ->fetch()){
             <div class='dropdown'>
             <button class='dropbtn'>&#8942;</button>
             <div class='dropdown-content'>
-              <a href='#'>Link 1</a>
+            <a href='#' class = 'duckLink' data-name='$tbl' >Assignments</a>
               <a href='/minorproject/new_dashboard/pages/delete.php?assign_id=$assign_id&assign_tbl=$assign_tbl&class_tbl=$classcode' class = 'confirmation'>Delete</a>
             </div>
           </div>           
@@ -88,7 +89,7 @@ while($rowa = $ra ->fetch()){
             <div class='dropdown'>
             <button class='dropbtn'>&#8942;</button>
             <div class='dropdown-content'>
-              <a href='#'>Link 1</a>
+            <a href='#' class = 'duckLink' data-name='$tbl' >Assignments</a>
               <a href='/minorproject/new_dashboard/pages/delete.php?assign_id=$assign_id&assign_tbl=$assign_tbl&class_tbl=$classcode' class = 'confirmation'>Delete</a>
             </div>
           </div>      
@@ -99,7 +100,7 @@ while($rowa = $ra ->fetch()){
             <div class='dropdown'>
             <button class='dropbtn'>&#8942;</button>
             <div class='dropdown-content'>
-              <a href='#'>Link 1</a>
+              <a href='#' class = 'duckLink' data-name='$tbl'>Assignments</a>
               <a href='/minorproject/new_dashboard/pages/delete.php?assign_id=$assign_id&assign_tbl=$assign_tbl&class_tbl=$classcode' class = 'confirmation'>Delete</a>
             </div>
           </div>                   
@@ -112,7 +113,7 @@ while($rowa = $ra ->fetch()){
             <div class='dropdown'>
             <button class='dropbtn'>&#8942;</button>
             <div class='dropdown-content'>
-              <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
+              <a href='#' class = 'productLink' data-name ='$tbl' >Submit Assignment</a>
             </div>
           </div> 
             <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
@@ -140,7 +141,19 @@ while($rowa = $ra ->fetch()){
     }
      
 }
-
+$assignsubmission = '';
+if(isset($_POST['jsVariable'])){
+  $ttble_name = $_POST['jsVariable'];
+  $gh = $pdo -> query("SELECT * FROM $ttble_name");
+  while ($rgh = $gh-> fetch()){
+    $sstd_id =$rgh['student_id'] ;
+    $filenamm =$rgh['filenamm'] ;
+    $student_name = $pdo->query("SELECT * FROM users WHERE id = '$sstd_id'");
+    $res = $student_name -> fetch();
+    $std_name = $res['fname'];
+    $assignsubmission .= "<tr> <th scope = 'row'>$sstd_id </th><td>$std_name</td><td><a href='assignmentuploads/$filenamm'>$filenamm</a></td></tr>";
+  }
+}
 
 
 // CREATE ASSIGNMENT FOR TEACHER AND VIEW ONLY FOR STUDENT if case
@@ -258,6 +271,25 @@ i{
     border: 1px solid #888;
     width: 80%;
   }
+  .newmodal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .newmodal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
 
   .close {
     color: #aaa;
@@ -271,6 +303,59 @@ i{
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+  .cclose {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .cclose:hover,
+  .cclose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  table {
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+  
+  caption {
+    caption-side: bottom;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  thead,
+  tfoot {
+    background-color: rgb(228 240 245);
+  }
+  
+  th,
+  td {
+    border: 1px solid rgb(160 160 160);
+    padding: 8px 10px;
+  }
+  
+  td:last-of-type {
+    text-align: center;
+  }
+  
+  tbody > tr:nth-of-type(even) {
+    background-color: rgb(237 238 242);
+  }
+  
+  tfoot th {
+    text-align: right;
+  }
+  
+  tfoot td {
+    font-weight: bold;
   }
 </style>
 
@@ -288,6 +373,28 @@ i{
     $assignmenthandler 
     </div>
     <hr>
+
+    <form id="myForm" method="POST" style="display: none;">
+        <input type="hidden" id="hiddenInput" name="jsVariable">
+    </form>
+
+
+    <div id= 'mynewModal' class = 'newmodal'>
+      <div class = 'newmodal-content'>
+        <span class = 'cclose'>&times;</span>
+        <table>
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Student Name</th>
+           <th scope="col">Submission</th>
+        </tr>
+        </thead>
+        <tbody>
+        $assignsubmission
+        </tbody></table>
+      </div>
+    </div>
 
     <div id = 'myModal' class = 'modal'>
         <div class = 'modal-content'>

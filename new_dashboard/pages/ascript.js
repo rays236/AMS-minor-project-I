@@ -32,3 +32,36 @@ for (var i = 0 , l = plink.length; i < l; i++){
       modal.style.display = 'none';
     }
   }
+
+
+  
+    var dlink = document.getElementsByClassName('duckLink');
+
+    var dlinker = function(){
+
+      var jsvariable = this.getAttribute("data-name");
+      
+      document.getElementById('hiddenInput').value = jsvariable;
+      // Submit the form
+      document.getElementById('myForm').submit();
+
+      
+
+    }
+    // Set the value of a hidden input field
+    
+for (var j = 0 , m = dlink.length; j < m; j++){
+dlink[j].addEventListener('click',dlinker, false);
+}
+
+var newmodal = document.getElementById("mynewModal");
+var ccloseBtn = document.getElementsByClassName("cclose")[0];
+
+ccloseBtn.onclick = function() {
+  newmodal.style.display = 'none';
+}
+window.onclick = function(event) {
+  if (event.target == newmodal){
+    newmodal.style.display = 'none';
+  }
+}
