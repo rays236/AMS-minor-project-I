@@ -58,7 +58,7 @@ else {
     $archive = '';
 }
 
-$qa = "SELECT * FROM $assign_tbl ORDER BY  assign_id DESC";
+$qa = "SELECT * FROM $assign_tbl ORDER BY  assigned_on DESC";
 $ra = $pdo -> query($qa);
 while($rowa = $ra ->fetch()){
     $assign = $rowa['content'];
@@ -267,10 +267,15 @@ if(!empty($_POST['editor1'])  || !empty($_FILES["file"]["name"])){
         $folder_path = null;
     }
         //file name shouldn't contain quote(') sign in it
-
-    $query = "INSERT INTO $assign_tbl(content, assigned_on, filenam, folder_path) VALUES ('$content','$added_on', '$filename','$folder_path')";
+    $aid = 'aid' . rand(10,1000);
+    $query = "INSERT INTO $assign_tbl(assign_id, content, assigned_on, filenam, folder_path) VALUES ('$aid','$content','$added_on', '$filename','$folder_path')";
     $rs = $pdo -> query($query);
     if ($rs){
+
+        $newtable = $assign_tbl.$aid;
+        $ssq = "CREATE TABLE $newtable(student_id varchar(11), filenamm LONGTEXT)";
+        $rrq = $pdo -> query($ssq);
+
         echo "<script>window.location.reload()</script>";
     }
 }
