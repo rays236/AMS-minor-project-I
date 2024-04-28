@@ -36,8 +36,9 @@ if(isset($_SESSION['id'])){
         while($rwt = $rt ->fetch()){
             $tid = $rwt['teacher'];
             $classname = $rwt['classname'];
+            $classcode = $rwt['classcode'];
             if($id == $tid ){
-                $classenrolled .= "<li><a href='#'> $classname </a></li>";
+                $classenrolled .= "<li><a href='/minorproject/new_dashboard/pages/class.php?i=$classcode'> $classname </a></li>";
             }
         }
     }
@@ -51,12 +52,13 @@ if(isset($_SESSION['id'])){
         while($rws = $rs -> fetch()){
             $std_tbl_id = $rws['std_tbl_id'];
             $classname = $rws['classname'];
+            $classcode = $rws['classcode'];
 
             $qs2 = "SELECT * FROM $std_tbl_id";
             $rs2 = $pdo -> query($qs2);
             while($rws2 = $rs2 -> fetch()){
                 if($id == $rws2['student_id']){
-                    $classenrolled .= "<li><a href='#'> $classname </a></li>";
+                    $classenrolled .= "<li><a href='/minorproject/new_dashboard/pages/class.php?i=$classcode'> $classname </a></li>";
                 }
             }
         }
@@ -114,13 +116,9 @@ echo<<<_END
                         <i class='bx bx-archive'></i>
                         <span class="link_name">Archived</span>
                     </a>
-                    <i class='bx bx-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Archived</a></li>
-                    <li><a href="#">Archived Class 1</a></li>
-                    <li><a href="#">Archived Class 2</a></li>
-                    <li><a href="#">Archived Class 3</a></li>
                 </ul>
             </li>
             <li data-open-modal>
@@ -207,6 +205,6 @@ echo<<<_END
 </html>
 _END;
 }
-else echo"Please <a href = '../SIGNup/login.php'>Click here</a> to log in.";
+else echo"Please <a href = '../minorproject/SIGNup/login.php'>Click here</a> to log in.";
 
 ?>

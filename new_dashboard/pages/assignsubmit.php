@@ -25,9 +25,7 @@ if(!empty($_FILES['file']['name'])){
     $refile = $pdo -> query("INSERT INTO $tbl VALUES ('$id','$filenamee')");
     if($refile){
         echo "<script> 
-        alert('file sucessfully submitted');
-        
-        
+        location.href = '/minorproject/new_dashboard/pages/class.php?i=$classcode';  
         </script>";
     }
 }

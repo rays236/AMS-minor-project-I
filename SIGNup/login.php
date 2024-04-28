@@ -41,9 +41,6 @@ else{
                     <div class="input-container password">
                         <label for="password">Password</label>
                         <input id="password" name="password" type="password" placeholder="Must be at least 6 characters">
-                        <span class="material-symbols-outlined">
-                            visibility_off
-                            </span>
                     </div>
                     <button class="signup-btn" type="submit">Login</button>
                 </form>

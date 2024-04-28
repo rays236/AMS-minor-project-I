@@ -49,8 +49,8 @@ if ($ror['role'] == 'teacher'){
         <input type = 'file' name = 'file' id='file'><br><br> 
         <input type='submit'>
 </form>";
-$archive = "<div class='dropdown '>
-<a href='/minorproject/new_dashboard/pages/archivee.php?class_tbl=$classcode' class='dropbtn confirmation' id = 'archive'><i class='bx bx-archive-in'></i></a>
+$archive = "<div class='dropdown'>
+<a href='/minorproject/new_dashboard/pages/archivee.php?class_tbl=$classcode' class='dropbtn confirmation' id = 'archive'><i class='bx bx-archive-in bx-md'></i></a>
 </div>";
 }
 else {
@@ -179,6 +179,7 @@ echo<<<_END
         position: relative;
         display: inline-block;
         float: right;
+        margin: 10px;
       }
       
       .dropdown-content {
@@ -201,7 +202,6 @@ echo<<<_END
       
       .dropdown:hover .dropdown-content {display: block;}
       
-      .dropdown:hover .dropbtn {background-color: white;border-radius: 5px;}
     
       
 aside {

@@ -26,7 +26,7 @@ window.onload = function()
         }
         default:
         {
-            loadPage("404");
+            loadPage("home");
             break;
         }
     }
