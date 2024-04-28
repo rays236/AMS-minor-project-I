@@ -86,12 +86,12 @@ while($row = $result -> fetch()){
                  if(in_array($extension, $pictures)){
                     $hw .= "
                     <div class = 'assign'>        
-                    <div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href='new_dashboard/pages/uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>
+                    <div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href='minorproject/new_dashboard/pages/uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>
                     ";
                 }
                 elseif ($extension) {
                     $hw .= "<div class = 'assign'>     
-                  <div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href = 'new_dashboard/pages/ploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
+                  <div class = 'assigned_on'>$assigned_on</div><br>$assign<div><a href = 'minorproject/new_dashboard/pages/uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
                 }
                 else {
                     $hw .= "<div class = 'assign'>               
