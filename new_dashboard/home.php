@@ -131,15 +131,7 @@ echo<<<_END
                 </ul>
             </li> 
             $mycard
-            <li class="menu__item" value="calender">
-                <a href="#">
-                    <i class='bx bx-calendar-event'></i>
-                    <span class="link_name">Calender</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Calender</a></li>
-                </ul>
-            </li>
+            
             <li>
             <div class="profile-details">
              <div class="profile-content">
@@ -205,6 +197,6 @@ echo<<<_END
 </html>
 _END;
 }
-else echo"Please <a href = '../minorproject/SIGNup/login.php'>Click here</a> to log in.";
+else echo"Please <a href = '../SIGNup/login.php'>Click here</a> to log in.";
 
 ?>

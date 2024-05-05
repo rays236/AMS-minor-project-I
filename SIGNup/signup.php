@@ -23,7 +23,7 @@ $fail .= validate_password($password);
 
 if ($fail == "") {
     if ($role == "student"){
-        $id = rand(1,99) . "std";
+        $id = rand(1,99) . "sstd";
         add_user($pdo, $id, $fn, $hash, $email, $role);
         echo<<<_END
         <script>
@@ -32,7 +32,7 @@ if ($fail == "") {
         _END;
     }
     else {
-        $id = rand(1,99) . "tch";
+        $id = rand(1,99) . "stch";
         add_user($pdo, $id, $fn, $hash, $email, $role);
         echo<<<_END
         <script>

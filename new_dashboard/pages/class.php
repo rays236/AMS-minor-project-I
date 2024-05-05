@@ -151,7 +151,7 @@ if(isset($_POST['jsVariable'])){
     $student_name = $pdo->query("SELECT * FROM users WHERE id = '$sstd_id'");
     $res = $student_name -> fetch();
     $std_name = $res['fname'];
-    $assignsubmission .= "<tr> <th scope = 'row'>$sstd_id </th><td>$std_name</td><td><a href='assignmentuploads/$filenamm'>$filenamm</a></td></tr>";
+    $assignsubmission .= "<tr> <th scope = 'row'>$sstd_id </th><td>$std_name</td><td><a href='assignmentuploads/$filenamm'>$filenamm</a></td><td><input type = 'hidden' name = 'student_id' value = '$sstd_id'><input type='text' name = 'remark'></td></tr>";
   }
 }
 
@@ -382,17 +382,23 @@ i{
     <div id= 'mynewModal' class = 'newmodal'>
       <div class = 'newmodal-content'>
         <span class = 'cclose'>&times;</span>
+        <form action = 'grading.php' method = 'post'>
+        <input type = 'hidden' name = 'classcode' value = '$classcode'>
+        <input type = 'hidden' name = 'table_name' value = '$newtable'>
         <table>
         <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Student Name</th>
            <th scope="col">Submission</th>
+           <th scope="col">Remark</th>
         </tr>
         </thead>
         <tbody>
         $assignsubmission
+        <tr ><td colspan = '4'><input type = 'submit'></td></tr>
         </tbody></table>
+        </form>
       </div>
     </div>
 
@@ -450,7 +456,7 @@ if(!empty($_POST['editor1'])  || !empty($_FILES["file"]["name"])){
     if ($rs){
 
         $newtable = $assign_tbl.$aid;
-        $ssq = "CREATE TABLE $newtable(student_id varchar(11), filenamm LONGTEXT)";
+        $ssq = "CREATE TABLE $newtable(student_id varchar(11), filenamm LONGTEXT, remark varchar(128))";
         $rrq = $pdo -> query($ssq);
 
         echo "<script>window.location.reload()</script>";

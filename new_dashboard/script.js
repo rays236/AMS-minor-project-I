@@ -19,11 +19,6 @@ window.onload = function()
             loadPage("archive");
             break;
         }
-        case "calender":
-        {
-            loadPage("calender");
-            break;
-        }
         default:
         {
             loadPage("home");
