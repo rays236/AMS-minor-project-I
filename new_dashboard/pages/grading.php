@@ -13,16 +13,30 @@ catch(PDOException $e){
 session_start();
 $id = $_SESSION['id'];
 
+
 $classcode = $_POST['classcode'];
-$student_id = $_POST['student_id'];
-$remark = $_POST['remark'];
+
+$count = $_POST['count'];
+// $student_id = $_POST['student_id'];
+// $remark = $_POST['remark'];
 $table_name = $_POST['table_name'];
-$sql = "INSERT INTO $table_name (remark) VALUES $remark WHERE student_id = '$student_id ";
-$result = $pdo -> query($sql);
-if($result){
+
+$x = 0;
+
+ while($x < $count ){
+    $name = 'name'.$x;
+    $std_id = $_POST[$name];
+
+    $remark = 'remark'.$x;
+    $rm = $_POST[$remark];
+
+    $result = $pdo -> query("UPDATE $table_name SET remark = '$rm' WHERE student_id = '$std_id' ");
+    $x +=1;
+ }
+ 
+
     echo"
     <script>
-    location.href='/minorproject/new_dashboard/pages/class.php?i=$classcode'>'
+     location.href='/minorproject/new_dashboard/pages/class.php?i=$classcode'
     </script>
     ";
-}

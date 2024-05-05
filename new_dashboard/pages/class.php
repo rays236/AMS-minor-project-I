@@ -69,7 +69,7 @@ while($rowa = $ra ->fetch()){
     $pictures = array('jpg', 'jpeg', 'png','gif');
 
     $tbl = $assign_tbl.$assign_id;
-
+    
     if ($ror['role'] == 'teacher'){
         if(in_array($extension, $pictures)){
             $assignmentlist .= "
@@ -108,6 +108,15 @@ while($rowa = $ra ->fetch()){
         }
     }
     else {
+        $rem = $pdo -> query("SELECT * FROM $tbl WHERE student_id = '$id'");
+        if($reem = $rem -> fetch()){
+          $comment0 = $reem['filenamm'];
+          $comment1 = $reem['remark'];
+        }
+        else {
+          $comment0 = 'Assignment yet to be submitted';
+          $comment1 = 'N/A ';
+        }
         if(in_array($extension, $pictures)){
             $assignmentlist .= "<div class = 'assign'>
             <div class='dropdown'>
@@ -116,7 +125,7 @@ while($rowa = $ra ->fetch()){
               <a href='#' class = 'productLink' data-name ='$tbl' >Submit Assignment</a>
             </div>
           </div> 
-            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div></div>";
+            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href='uploads/$filename' target = '_blank'><img src = 'uploads/$filename' width = '400px' height = 'auto'></a></div><br><hr><div>ASSIGNMENT : <a href = 'assignmentuploads/$comment0'>$comment0</a> | Remark : $comment1</div></div>";
         }
         elseif ($extension) {
             $assignmentlist .= "<div class = 'assign'>
@@ -126,7 +135,7 @@ while($rowa = $ra ->fetch()){
               <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
             </div>
           </div> 
-            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div></div>";
+            <div class = 'assigned_on'>$assigned_on</div>$assign<div><a href = 'uploads/$filename' target = '_blank' ><i class='bx bx-file' ></i>$filename</a></div><br><hr><div>ASSIGNMENT : <a href = 'assignmentuploads/$comment0'>$comment0</a> | Remark : $comment1</div></div>";
         }
         else {
             $assignmentlist .= "<div class = 'assign'>
@@ -136,22 +145,31 @@ while($rowa = $ra ->fetch()){
               <a href='#' class = 'productLink' data-name ='$tbl'>Submit Assignment</a>
             </div>
           </div> 
-          <div class = 'assigned_on'>$assigned_on</div>$assign</div>";
+          <div class = 'assigned_on'>$assigned_on</div>$assign<hr><div>ASSIGNMENT : <a href = 'assignmentuploads/$comment0'>$comment0</a> | Remark : $comment1</div></div>";
         }
     }
      
 }
-$assignsubmission = '';
+$assignsubmission =  '';
+$count = 0;
 if(isset($_POST['jsVariable'])){
   $ttble_name = $_POST['jsVariable'];
   $gh = $pdo -> query("SELECT * FROM $ttble_name");
   while ($rgh = $gh-> fetch()){
     $sstd_id =$rgh['student_id'] ;
+
     $filenamm =$rgh['filenamm'] ;
+    $hh = $rgh['remark'];
     $student_name = $pdo->query("SELECT * FROM users WHERE id = '$sstd_id'");
     $res = $student_name -> fetch();
     $std_name = $res['fname'];
-    $assignsubmission .= "<tr> <th scope = 'row'>$sstd_id </th><td>$std_name</td><td><a href='assignmentuploads/$filenamm'>$filenamm</a></td><td><input type = 'hidden' name = 'student_id' value = '$sstd_id'><input type='text' name = 'remark'></td></tr>";
+
+    $name = 'name'.$count;
+
+    $remark = 'remark'.$count;
+
+    $count += 1;
+    $assignsubmission .= "<tr> <th scope = 'row'>$sstd_id </th><td>$std_name</td><td><a href='assignmentuploads/$filenamm'>$filenamm</a></td><td><input type = 'hidden' name = '$name' value = '$sstd_id'><input type='text' name = '$remark'><input type = 'hidden' name = 'table_name' value = '$ttble_name'></td><td>$hh</td></tr>";
   }
 }
 
@@ -384,7 +402,8 @@ i{
         <span class = 'cclose'>&times;</span>
         <form action = 'grading.php' method = 'post'>
         <input type = 'hidden' name = 'classcode' value = '$classcode'>
-        <input type = 'hidden' name = 'table_name' value = '$newtable'>
+        
+        <input type = 'hidden' name = 'count' value = '$count'>
         <table>
         <thead>
         <tr>
@@ -392,6 +411,7 @@ i{
           <th scope="col">Student Name</th>
            <th scope="col">Submission</th>
            <th scope="col">Remark</th>
+           <th scope="col"> Given remark</th>
         </tr>
         </thead>
         <tbody>
