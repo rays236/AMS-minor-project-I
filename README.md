@@ -1,0 +1,1 @@
+Assignment Management System for my minor project of 1 credit, this project consists of features such as teachers and students sign in and join their respective classes and can deal with their assignments within a single platform.
